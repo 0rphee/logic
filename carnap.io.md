@@ -66,3 +66,306 @@ show: P or R
 :DD 25
 ```
 
+## Chapter 10
+
+## Ex. 13.9
+
+```
+⊤ ⊢ (((P → R) ∧ (Q → S)) → ((P ∧ Q) → (R ∧ S))) ✓
+```
+
+```
+show ((P -> R) and (Q -> S)) -> ((P and Q) -> (R and S))
+  (P -> R) and (Q -> S) :AS
+  P -> R :S 2
+  Q -> S :S 2
+  show: P and Q -> R and S
+    P and Q :AS
+    P :S 6
+    R :MP 7,3
+    Q :S 6
+    S :MP 4,9
+    R and S :ADJ 8,10
+  :CD 11
+:CD 5
+```
+
+## Ex. 13.10
+
+```
+⊤ ⊢ ((P → (Q ↔ R)) ↔ ((P ∧ Q) ↔ (P ∧ R))) ✓
+```
+
+```
+show: (P -> (Q <-> R)) <-> ((P and Q) <-> (P and R))
+  show: (P -> (Q <-> R)) -> ((P and Q) <-> (P and R))
+    P -> (Q <-> R) :AS
+    show: (P and Q) -> (P and R)
+      P and Q :AS
+      P :S 5
+      Q :S 5
+      Q <-> R :MP 6,3
+      Q -> R :BC 8
+      R :MP 7,9
+      P and R :ADJ 6,10
+    :CD 11
+    show: (P and R) -> (P and Q)
+      P and R :AS
+      P :S 14
+      R :S 14
+      Q <-> R :MP 15,3
+      R -> Q :BC 17
+      Q :MP 16,18
+      P and Q :ADJ 19,15
+    :CD 20
+    (P and Q) <-> (P and R) :CB 4,13
+  :CD 22
+  show: ((P and Q) <-> (P and R)) -> (P -> (Q <-> R))
+    (P and Q) <-> (P and R) :AS
+    P and Q -> P and R :BC 25
+    P and R -> P and Q :BC 25
+    show: P -> (Q <-> R)
+      P :AS
+      show: Q -> R
+        Q :AS
+        P and Q :ADJ 29,31
+        P and R :MP 32,26
+        R :S 33
+      :CD 34
+      show: R -> Q
+        R :AS
+        P and R :ADJ 37,29
+        P and Q :MP 27,38
+        Q :S 39
+      :CD 40
+      Q <-> R :CB 30,36
+    :CD 42
+  :CD 28
+  (P -> (Q <-> R)) <-> ((P and Q) <-> (P and R)) :CB 2,24
+:DD 45
+```
+
+## Ex. 14.9
+
+```
+⊤ ⊢ (((P → Q) ∨ R) ↔ (P → (Q ∨ R))) ✓
+```
+
+### Answer 1
+
+```
+show: ((P -> Q) or R) <-> (P -> (Q or R))
+  show: ((P -> Q) or R) -> (P -> (Q or R))
+    (P -> Q) or R :AS
+    show: not not ((not P or Q) or R)
+      not ((not P or Q) or R) :AS
+      not (not P or Q) and not R :D-DMA 5
+      not (not P or Q) :S 6
+      not R :S 6
+      not not P and not Q :D-DMA 7
+      P -> Q :MTP 8,3
+      not not P :S 9
+      P :DN 11
+      not Q :S 9
+      Q :MP 12,10
+    :ID 13,14
+    (not P or Q) or R :DN 4
+    R or (not P or Q) :D-CDIS 16
+    (R or not P) or Q :D-COMMOR 17
+    Q or (R or not P) :D-CDIS 18
+    (Q or R) or not P :D-COMMOR 19
+    not P or (Q or R) :D-CDIS 20
+    P -> (Q or R) :D-MII 21
+  :CD 22
+  show: (P -> (Q or R)) -> ((P -> Q) or R)
+    P -> (Q or R) :AS
+    show: not not ((not P or Q) or R)
+      not ((not P or Q) or R) :AS
+      not (not P or Q) and not R :D-DMA 27
+      not (not P or Q) :S 28
+      not not P and not Q :D-DMA 29
+      not not P :S 30
+      P :DN 31
+      Q or R :MP 32,25
+      not Q :S 30
+      R :MTP 33,34
+      not R :S 28
+    :ID 35,36
+    (not P or Q) or R :DN 26
+    show: not not ((P -> Q) or R)
+       not ((P -> Q) or R) :AS
+       not (P -> Q) and not R :D-DMA 40
+       not (P -> Q) :S 41
+       not R :S 41
+       not P or Q :MTP 43,38
+       P -> Q :D-MII 44
+    :ID 42,45
+    (P -> Q) or R :DN 39
+  :CD 47
+  ((P -> Q) or R) <-> (P -> (Q or R)) :CB 24,2
+:DD 49
+```
+
+### Answer 2
+
+```
+show: ((P -> Q) v R) <-> (P -> (Q v R))
+  show:  ((P -> Q) v R) -> (P -> (Q v R))
+    (P -> Q) v R :AS
+    show: P -> (Q v R)
+      P :AS
+      show: R -> (Q v R)
+        R :AS
+        Q v R :ADD 7
+      :CD 8
+      show: (P -> Q) -> Q v R
+        P -> Q :AS
+        Q :MP 5,11
+        Q v R :ADD 12
+      :CD 13
+      Q v R :D-HD 3,6,10
+    :CD 15
+  :CD 4
+  show: (P -> (Q v R)) -> ((P -> Q) v R)
+    P -> (Q v R) :AS
+    not P v (Q v R) :D-MI 19
+    (not P v Q) v R :D-COMMOR 20
+    show: not P v Q -> (P -> Q)
+      not P v Q :AS
+      P -> Q :D-MII 23
+    :CD 24
+    (P -> Q) v R :D-ORCOND 22,21
+  :CD 26
+  ((P -> Q) v R) <-> (P -> (Q v R)) :CB 2,18
+:DD 28
+```
+
+## Ex. 14.10
+
+```
+(P ↔ Q), (P ↔ R) ⊢ (P ↔ (Q ∨ R)) ✓
+```
+
+```
+show: P <-> Q or R
+  P <-> Q :PR
+  P <-> R :PR
+  P -> Q :BC 2
+  P -> R :BC 3
+  Q -> P :BC 2
+  R -> P :BC 3
+  show: P -> Q or R
+    P :AS
+    Q :MP 4,9
+    Q or R :ADD 10
+  :CD 11
+  show: Q or R -> P
+    Q or R :AS
+    show: not not P
+      not P :AS
+      not Q :MT 6,16
+      R :MTP 14,17
+      not R :MT 7,16
+    :ID 18,19
+    P :DN 15
+  :CD 21
+  P <-> Q or R :CB 8,13
+:DD 23
+```
+
+## Chapter 12
+
+## Ex. 16.1
+
+```
+∀x(F(x) ∧ G(x)) ⊢ F(c) ✓
+```
+
+```
+show: F(c)
+  Ax(F(x) ^  G(x)) :PR
+  F(c) ^ G(c) :UI 2
+  F(c) :S 3
+:DD 4
+```
+
+## Ex. 16.2
+
+```
+∀xF(x), (F(c) → G(c)) ⊢ G(c) ✓
+```
+
+```
+show: G(c)
+  Ax F(x) :PR
+  F(c) -> G(c) :PR
+  F(c) :UI 2
+  G(c) :MP 3,4
+:DD 5
+```
+
+## Ex. 16.3
+
+```
+∀xF(x), ((F(b) ∧ F(c)) → G(c)) ⊢ ∃xG(x) ✓
+```
+
+```
+show: Ex G(x)
+  Ax F(x) :PR
+  (F(b) ^ F(c)) -> G(c) :PR
+  F(b) :UI 2
+  F(c) :UI 2
+  F(b) ^ F(c) :ADJ 4,5
+  G(c) :MP 3,6
+  Ex G(x) :EG 7
+:DD 8
+```
+
+## Ex. 16.4
+
+```
+∀x∀y(F(x) → G(y)), F(c) ⊢ G(d) ✓
+```
+
+```
+show: G(d)
+  AxAy (F(x) -> G(y)) :PR
+  F(c) :PR
+  Ay (F(c) -> G(y)) :UI 2
+  F(c) -> G(d) :UI 4
+  G(d) :MP 3,5
+:DD 6
+```
+
+## Ex. 16.5
+
+```
+∀x∀y(F(x) ↔ G(y)), F(c) ⊢ F(d) ✓
+```
+
+```
+show: F(d)
+  AxAy(F(x) <-> G(y)) :PR
+  F(c) :PR
+  Ay(F(c) <-> G(y)) :UI 2
+  F(c) <-> G(d) :UI 4
+  F(c) -> G(d) :BC 5
+  Ay(F(d) <-> G(y)) :UI 2
+  F(d) <-> G(d) :UI 7
+  G(d) -> F(d) :BC 8
+  G(d) :MP 3,6
+  F(d) :MP 9,10
+:DD 11
+```
+
+## Ex. 16.6
+
+```
+```
+
+```
+```
+
+
+

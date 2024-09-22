@@ -359,13 +359,180 @@ show: F(d)
 :DD 11
 ```
 
-## Ex. 16.6
+## Ex. 17.1
 
 ```
+∀x(F(x) → G(x)), ∀xF(x) ⊢ ∀xG(x) ✓
 ```
 
 ```
+show: AxG(x)
+  Ax(F(x) -> G(x)) :PR
+  AxF(x) :PR
+  F(a) -> G(a) :UI 2
+  F(a) :UI 3
+  G(a) :MP 4,5
+:UD 6
 ```
 
+## Ex. 17.2
 
+```
+∀x(F(x) → G(x)), ∀x(G(x) → H(x)) ⊢ ∀x(F(x) → H(x)) ✓
+```
 
+```
+show: ∀x(F(x) → H(x))
+  ∀x(F(x) → G(x)) :PR
+  ∀x(G(x) → H(x)) :PR
+  F(c) -> G(c) :UI 2
+  G(c) -> H(c) :UI 3
+  F(c) -> H(c) :D-HS 4,5
+:UD 6
+```
+
+## Ex. 17.3
+
+```
+∀x(G(x) ∧ G(c)) ⊢ ∀xG(x) ✓
+```
+
+```
+show: ∀xG(x)
+  ∀x(G(x) ∧ G(c)) :PR
+  G(a) ^ G(c) :UI 2
+  G(a) :S 3
+:UD 4
+```
+## Ex. 17.4
+
+```
+∀x¬F(x), F(d) ⊢ ¬∀xF(x) ✓
+```
+
+```
+show: ¬∀xF(x)
+  ∀x¬F(x) :PR
+  F(d) :PR
+  ~F(a) :UI 2
+  show: ~Ax(F(x))
+    AxF(x) :AS
+    F(a) :UI 6
+  :ID 4,7
+:DD 5
+```
+
+## Ex. 17.5
+
+```
+¬∃xF(x) ⊢ ∀x¬F(x) ✓
+```
+
+```
+show: ∀x¬F(x)
+  ¬∃xF(x) :PR
+  show: ~F(c)
+    F(c) :AS
+    ExF(x) :EG 4
+  :ID 2,5
+:UD 3
+```
+
+## Ex. 17.6
+
+```
+∃x(F(x) ∧ G(a)) ⊢ G(a) ✓
+```
+
+```
+show: G(a)
+  ∃x(F(x) ∧ G(a)) :PR
+  show: G(a)
+    F(c) ^ G(a) :AS
+    G(a) :S 4
+  :ED 2,4,5
+:DD 3
+```
+
+## Ex. 17.7
+
+```
+∀x(F(x) → G(x)), ∃xF(x) ⊢ ∃xG(x) ✓
+```
+
+```
+show: ∃xG(x)
+  ∀x(F(x) → G(x)) :PR
+  ∃xF(x) :PR
+  show: ExG(x)
+    F(a) :AS
+    F(a) -> G(a) :UI 2
+    G(a) :MP 5,6
+    ExG(x) :EG 7
+  :ED 3,5,8
+:DD 4
+```
+
+## Ex. 17.8
+
+```
+∀x(F(x) → G(x)), ∃x(F(x) ∧ H(x)) ⊢ ∃x(G(x) ∧ H(x)) ✓
+```
+
+```
+show: ∃x(G(x) ∧ H(x))
+  ∀x(F(x) → G(x)) :PR
+  ∃x(F(x) ∧ H(x)) :PR
+  show: Ex(G(x) ^ H(x))
+    F(a) ^ H(a) :AS
+    F(a) :S 5
+    F(a) -> G(a) :UI 2
+    G(a) :MP 6,7
+    H(a) :S 5
+    G(a) ^ H(a) :ADJ 8,9
+    Ex(G(x) ^ H(x)) :EG 10
+  :ED 11, 5,3
+:DD 4
+```
+
+## Ex. 17.9
+
+```
+∀x(F(x) → G(x)), ¬∃x(F(x) ∧ G(x)) ⊢ ¬∃xF(x) ✓
+```
+
+```
+show: ¬∃xF(x)
+  ∀x(F(x) → G(x)) :PR
+  ¬∃x(F(x) ∧ G(x)) :PR
+  F(a) -> G(a) :UI 2
+  show: ~ExF(x)
+    ExF(x) :AS
+    show: Ex(F(x) ^ G(x))
+      F(a) :AS
+      G(a) :MP 8,4
+      F(a) ^ G(a) :ADJ 8,9
+      Ex(F(x) ^ G(x)) :EG 10
+    :ED 6,8,11
+  :ID 3,7
+:DD 5
+```
+
+## Ex. 17.10
+
+```
+∃x¬F(x) ⊢ ¬∀xF(x) ✓
+```
+
+```
+show: ¬∀xF(x)
+  ∃x¬F(x) :PR
+  show: ~AxF(x)
+    ~F(a) :AS
+     show: ~AxF(x)
+       Ax(F(x)) :AS
+       F(a) :UI 6
+     :ID 7,4
+  :ED 2,4,5
+:DD 3
+```
